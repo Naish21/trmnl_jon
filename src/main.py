@@ -30,6 +30,24 @@ def cargar_horario(ruta_yaml: str) -> Dict[str, str]:
 
     Returns:
         dict: Contenido del YAML como diccionario.
+
+    El archivo yaml tiene la siguiente estructura:
+    ---
+    1:  # Lunes
+      "17:00": Waterpolo
+    2:  # Martes
+      "17:00": Robótica
+    3:  # Miércoles
+      "17:00": Waterpolo
+    4:  # Jueves
+      "17:30": Euskera
+    5:  # Viernes
+      "17:30": Halloween (casa)
+    6:  # Sábado
+      todo_el_dia: Libre
+    7:  # Domingo
+      mañana: Halloween (Barakaldo)
+      tarde: Halloween (Barakaldo)
     """
     ruta = Path(ruta_yaml)
 
