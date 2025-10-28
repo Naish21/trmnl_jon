@@ -64,27 +64,42 @@ def cargar_horario(ruta_yaml: str) -> Dict[str, str]:
             raise ValueError(f"Error al parsear el YAML: {e}")
 
 
-def get_info_today_tomorrow() -> Dict[str, str]:
+def get_info_today_tomorrow(file_path: str) -> Dict[str, str]:
     """"
     Devuelve un diccionario con las actividades de hoy y mañana
 
     Args:
-        None
+        file_path(str): Ruta al archivo YAML.
 
     Returns:
         dict: diccionario de actividades de hoy y mañana
+
+    ejemplo de salida:
+
+    {
+     'current_day': 'lunes',
+     'current_horas': ['17:00', '18:00'],
+     'current_actividades': ['waterpolo', 'musica'],
+     'tomorrow_day': 'martes',
+     'tomorrow_horas': ['Mañana', 'tarde'],
+     'tomorrow_activities': ['musica', 'libre']
+    }
     """
-    horario = cargar_horario(os.getenv('RUTA_YAML'))
+    horario = cargar_horario(file_path)
     current_day = int(datetime.now().strftime('%w'))
-    today = weekday.get(current_day)
-    tomorrow = weekday.get(current_day + 1)
-    ans = dict()
-    ans[today] = horario.get(current_day)
-    ans[tomorrow] = horario.get(current_day + 1)
-    return ans
+    return {
+        'current_day': weekday.get(current_day),
+        'current_horas': list(horario.get(current_day).keys()),
+        'current_actividades': list(horario.get(current_day).values()),
+        'tomorrow_day': weekday.get(current_day + 1),
+        'tomorrow_horas': list(horario.get(current_day + 1).keys()),
+        'tomorrow_activities': list(horario.get(current_day + 1).values()),
+    }
 
 
 @app.get("/horario")
 def get_horario():
     """Endpoint que devuelve el resultado de get_info_today_tomorrow"""
-    return get_info_today_tomorrow()
+    return get_info_today_tomorrow(os.getenv('RUTA_YAML'))
+
+
