@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from typing import Dict
 
-load_dotenv()
+load_dotenv('./src/.env')
 
 weekday = {
     1 : "Lunes",
@@ -87,6 +87,7 @@ def get_info_today_tomorrow(file_path: str) -> Dict[str, str]:
     """
     horario = cargar_horario(file_path)
     current_day = int(datetime.now().strftime('%w'))
+    current_day = 7 if current_day == 0 else current_day  # Fixes sunday in linux
     tomorrow = int((datetime.now() + timedelta(days=1)).strftime('%w'))
     return {
         'current_day': weekday.get(current_day),
