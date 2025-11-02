@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import yaml
@@ -87,13 +87,14 @@ def get_info_today_tomorrow(file_path: str) -> Dict[str, str]:
     """
     horario = cargar_horario(file_path)
     current_day = int(datetime.now().strftime('%w'))
+    tomorrow = int((datetime.now() + timedelta(days=1)).strftime('%w'))
     return {
         'current_day': weekday.get(current_day),
         'current_horas': list(horario.get(current_day).keys()),
         'current_actividades': list(horario.get(current_day).values()),
-        'tomorrow_day': weekday.get(current_day + 1),
-        'tomorrow_horas': list(horario.get(current_day + 1).keys()),
-        'tomorrow_activities': list(horario.get(current_day + 1).values()),
+        'tomorrow_day': weekday.get(tomorrow),
+        'tomorrow_horas': list(horario.get(tomorrow).keys()),
+        'tomorrow_activities': list(horario.get(tomorrow).values()),
     }
 
 
