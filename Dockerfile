@@ -11,10 +11,5 @@ EXPOSE 8080
 
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8080"]
 
-# docker build . --tag horario_week:v0.01
-
-# docker run -d \
-#   --name horarios \
-#   -p 8080:8080 \
-#   -v ./horario:/deploy/src/auxdata \
-#   horario_week:v0.01
+# docker build . --tag horario_week:v0.02
+# docker run -d --name horarios -p 8080:8080 -v ./horario:/deploy/src/auxdata horario_week:v0.02

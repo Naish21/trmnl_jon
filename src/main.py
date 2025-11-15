@@ -89,6 +89,7 @@ def get_info_today_tomorrow(file_path: str) -> Dict[str, str]:
     current_day = int(datetime.now().strftime('%w'))
     current_day = 7 if current_day == 0 else current_day  # Fixes sunday in linux
     tomorrow = int((datetime.now() + timedelta(days=1)).strftime('%w'))
+    tomorrow = 7 if tomorrow == 0 else tomorrow  # Fixes sunday in linux
     return {
         'current_day': weekday.get(current_day),
         'current_horas': list(horario.get(current_day).keys()),
